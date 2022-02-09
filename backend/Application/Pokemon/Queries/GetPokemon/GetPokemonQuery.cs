@@ -27,7 +27,7 @@ namespace Application.Pokemon.Queries.GetPokemon
 
       public PokeServiceDto Handle(GetPokemonQuery request, CancellationToken cancellationToken)
       {
-        _context.
+        _pokeService.
 
         var ting = new PokeServiceDto
         {
