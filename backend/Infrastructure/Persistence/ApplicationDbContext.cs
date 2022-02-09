@@ -25,8 +25,8 @@ namespace Infrastructure.Persistence
     public DbSet<ExampleChild> ExampleChildren { get; set; }
 
     public DbSet<ExampleParent> ExampleParents { get; set; }
-
-
+    public DbSet<PokeExtraEntry> PokeExtraEntries {get; set; }
+    
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {

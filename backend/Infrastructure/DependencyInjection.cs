@@ -25,6 +25,7 @@ namespace Infrastructure
                 b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
         services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+        services.AddScoped<IPokeService, PokeService>();
 
         services.AddTransient<IDateTimeOffsetService, DateTimeOffsetService>();
       }
