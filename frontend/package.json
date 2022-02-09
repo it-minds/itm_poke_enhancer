@@ -32,7 +32,7 @@
     "@chakra-ui/react": "^1.8.1",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@microsoft/signalr": "^6.0.1",
+    "@microsoft/signalr": "^6.0.2",
     "@react-icons/all-files": "^4.1.0",
     "abort-controller": "^3.0.0",
     "framer-motion": "^6.2.3",
