@@ -1,4 +1,5 @@
 using Application.Pokemon;
+using Application.Pokemon.Commands.CreateProperty;
 using Application.Pokemon.Queries.GetAllPokemon;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -15,5 +16,18 @@ namespace Web.Controllers
     {
       return await Mediator.Send(new GetAllPokemonQuery(), cancellationToken);
     }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ICollection<BasePokemon>>> GetPokemon([FromRoute] int id, CancellationToken cancellationToken)
+    {
+      return await Mediator.Send(new GetAllPokemonQuery(), cancellationToken);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<int>> AddProperty([FromBody] CreatePropertyCommand command, CancellationToken cancellationToken)
+    {
+      return await Mediator.Send(command, cancellationToken);
+    }
+
   }
 }

@@ -3,11 +3,13 @@ using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using Application.Pokemon;
 using System.Net.Http;
+using System;
 
 namespace Infrastructure.Services
 {
   public class PokeService : IPokeService
   {
+
     public async Task<List<BasePokemon>> GetBasePokemonData()
     {
       try
@@ -30,16 +32,45 @@ namespace Infrastructure.Services
         }
         return pokemonToReturn;
       }
-      catch (HttpRequestException e)
+      catch (Exception)
       {
-        throw e;
+        throw;
       }
 
     }
 
-    public Task<BasePokemon> GetPokemon(int id)
+    public async Task<BasePokemon> GetPokemon(int id)
     {
-      throw new System.NotImplementedException();
+      try
+      {
+
+        using (HttpClient client = new HttpClient())
+        {
+          var result = await client.GetAsync("http://pokeapi.co/api/v2/pokemon/" + id);
+          var resolvedPokemon = await result.Content.ReadAsAsync<Base>();
+
+          var pokemonToReturn = new List<BasePokemon>();
+          foreach (var pokemon in resolvedPokemon.results)
+          {
+            var pokemonUrl = pokemon.url.Split("/");
+            // Console.WriteLine(pokemon.url + ", " + pokemonUrl[pokemonUrl.Length - 2]);
+            var newPokemon = new BasePokemon
+            {
+              Name = pokemon.name,
+              Id = int.Parse(pokemonUrl[pokemonUrl.Length - 2])
+            };
+            pokemonToReturn.Add(newPokemon);
+          }
+          return pokemonToReturn;
+
+        }
+
+
+      }
+      catch (Exception)
+      {
+        throw;
+      }
     }
   }
   public class Result

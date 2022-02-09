@@ -8,19 +8,27 @@ namespace Application.Pokemon.Queries.GetPokemon
 {
   public class GetPokemonQuery : IRequest<PokeServiceDto>
   {
+
+    int Id { get; set; }
+
     public class GetPokemonQueryHandler : IRequestHandler<GetPokemonQuery, PokeServiceDto>
     {
 
       private readonly IApplicationDbContext _context;
       private readonly IMapper _mapper;
-      public GetPokemonQueryHandler(IApplicationDbContext dbContext, IMapper mapper)
+      private readonly IPokeService _pokeService;
+
+      public GetPokemonQueryHandler(IApplicationDbContext dbContext, IMapper mapper, IPokeService pokeService)
       {
         _context = dbContext;
         _mapper = mapper;
+        _pokeService = pokeService;
       }
 
       public PokeServiceDto Handle(GetPokemonQuery request, CancellationToken cancellationToken)
       {
+        _context.
+
         var ting = new PokeServiceDto
         {
           Name = "lol",
