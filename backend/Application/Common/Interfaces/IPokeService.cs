@@ -1,12 +1,12 @@
-using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Application.Pokemon;
 
 namespace Application.Common.Interfaces
 {
   public interface IPokeService
   {
-    List<BasePokemon> GetBasePokemonData();
-    BasePokemon GetPokemon(int id);
+    Task<List<BasePokemon>> GetBasePokemonData();
+    Task<BasePokemon> GetPokemon(int id);
   }
 }

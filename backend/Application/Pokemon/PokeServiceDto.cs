@@ -1,8 +1,9 @@
 using Application.Common.Mappings;
+using Domain.Entities;
 
 namespace Application.Pokemon
 {
-  class PokeServiceDto : IAutoMap<Pokemon>
+  public class PokeServiceDto : IAutoMap<PokeExtraEntry>
   {
     public string Name { get; set; }
     public int PokeId { get; set; }

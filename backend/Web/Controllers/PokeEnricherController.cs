@@ -1,3 +1,5 @@
+using Application.Pokemon;
+using Application.Pokemon.Queries.GetAllPokemon;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading;
@@ -8,9 +10,10 @@ namespace Web.Controllers
 
   public class PokeEnricherController : ApiControllerBase
   {
-    [HttpGet("id")]
-    public async Task<ActionResult<pokemon>> GetPokemon([FromRoute] int id) {
-      return NoContent();
+    [HttpGet]
+    public async Task<ActionResult<ICollection<BasePokemon>>> GetAllPokemon(CancellationToken cancellationToken)
+    {
+      return await Mediator.Send(new GetAllPokemonQuery(), cancellationToken);
     }
   }
 }
