@@ -1,0 +1,75 @@
+{
+  "CQRS-Query": {
+    "scope": "csharp",
+    "prefix": "cqrsquery",
+    "body": [
+      "using System.Linq;",
+      "using System.Threading;",
+      "using System.Threading.Tasks;",
+      "using Application.Common;",
+      "using Application.Common.Interfaces;",
+      "using AutoMapper;",
+      "using MediatR;",
+      "using Microsoft.EntityFrameworkCore;",
+      "",
+      "namespace Application.${3:MyNamespace}.Queries.${1:ClassName}",
+      "{",
+      "  public class ${1:ClassName}Query : IRequest<${2:int}>",
+      "  {",
+      "    public class ${1:ClassName}QueryHandler : BaseQuery, IRequestHandler<${1:ClassName}Query, ${2:int}>",
+      "    {",
+      "      public ${1:ClassName}QueryHandler(IApplicationDbContext dbContext, IMapper mapper)",
+      "        : base(dbContext, mapper) {}",
+      "",
+      "      public async Task<${2:int}> Handle(${1:ClassName}Query request, CancellationToken cancellationToken)",
+      "      {",
+      "        return 0;$0",
+      "      }",
+      "    }",
+      "  }",
+      "}"
+    ]
+  },
+  "CQRS-Command": {
+    "scope": "csharp",
+    "prefix": "cqrscommand",
+    "body": [
+      "using System.Linq;",
+      "using System.Threading;",
+      "using System.Threading.Tasks;",
+      "using Application.Common;",
+      "using Application.Common.Interfaces;",
+      "using MediatR;",
+      "using Microsoft.EntityFrameworkCore;",
+      "",
+      "namespace Application.${3:MyNamespace}.Commands.${1:ClassName}",
+      "{",
+      "  public class ${1:ClassName}Command : IRequest<${2:int}>",
+      "  {",
+      "    public class ${1:ClassName}CommandHandler : BaseCommand, IRequestHandler<${1:ClassName}Command, ${2:int}>",
+      "    {",
+      "      public ${1:ClassName}CommandHandler(IApplicationDbContext dbContext) : base(dbContext) {}",
+      "",
+      "      public async Task<${2:int}> Handle(${1:ClassName}Command request, CancellationToken cancellationToken)",
+      "      {",
+      "        return 0;$0",
+      "      }",
+      "    }",
+      "  }",
+      "}"
+    ]
+  },
+  "CQRS-Command-Validator": {
+    "scope": "csharp",
+    "prefix": "cqrscommandvalidator",
+    "body": [
+      "public class ${1:ClassName}CommandValidator : AbstractValidator<${1:ClassName}Command>",
+      "{",
+      "  public ${1:ClassName}CommandValidator()",
+      "  {",
+      "     $0//RuleFor(x => x.Name).NotEmpty();",
+      "  }",
+      "}"
+    ]
+  }
+}

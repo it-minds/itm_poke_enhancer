@@ -1,0 +1,67 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "engines": {
+    "node": ">=16",
+    "npm": ">=8"
+  },
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
+    "start": "cross-env NODE_ENV=production node server.js",
+    "build": "next build",
+    "typecheck": "tsc",
+    "export": "next export",
+    "clean": "rm -rf .next out",
+    "lint": "next lint",
+    "lint:fix": "next lint --fix",
+    "test": "cypress open",
+    "test:headless": "cypress run",
+    "e2e": "start-server-and-test start http://localhost:3000 test",
+    "e2e:headless": "start-server-and-test start http://localhost:3000 test:headless"
+  },
+  "keywords": [],
+  "author": "Martin Johannesson <mjh@it-minds.dk> (<it-minds.dk>)",
+  "contributors": [
+    "Martin Johannesson <mjh@it-minds.dk>",
+    "Christopher Schmidt <csc@it-minds.dk>"
+  ],
+  "license": "MPL-2.0",
+  "dependencies": {
+    "@chakra-ui/react": "^1.8.1",
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@microsoft/signalr": "^6.0.1",
+    "@react-icons/all-files": "^4.1.0",
+    "abort-controller": "^3.0.0",
+    "framer-motion": "^6.2.3",
+    "isomorphic-unfetch": "^3.1.0",
+    "next": "^12.0.9",
+    "next-pwa": "^5.4.4",
+    "next-rosetta": "^2.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.25.3",
+    "react-list-reducer": "^1.1.0",
+    "react-number-format": "^4.9.1",
+    "ts-array-ext": "^2.1.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.13",
+    "@types/react": "^17.0.38",
+    "@typescript-eslint/eslint-plugin": "^5.10.1",
+    "cross-env": "^7.0.3",
+    "cypress": "^9.3.1",
+    "eslint": "^8.8.0",
+    "eslint-config-next": "12.0.9",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "prettier": "^2.5.1",
+    "start-server-and-test": "^1.14.0",
+    "typescript": "^4.5.5"
+  }
+}

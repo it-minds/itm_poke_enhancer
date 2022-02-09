@@ -1,0 +1,9 @@
+node_modules
+build
+out
+.next
+test-coverage
+public
+next-env.d.ts
+
+**/nswagts.ts

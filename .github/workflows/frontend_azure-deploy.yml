@@ -1,0 +1,50 @@
+name: Deploy Frontend to Azure Web App
+
+on:
+  push:
+    paths:
+      - "frontend/**"
+    branches:
+      - main
+
+defaults:
+  run:
+    working-directory: frontend
+
+env:
+  node-version: 14.x
+  appName: ${{ secrets.AzureAppService_AppName }}-app
+
+jobs:
+  frontend-deploy:
+    name: Deploy Frontend to Azure Web App
+    runs-on: ubuntu-latest
+
+    # environment: test
+
+    # concurrency:
+    #   group: ${{ github.ref }}-deploy-frontend-test
+    #   cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@master
+
+      - uses: actions/setup-node@v2.4.0
+        with:
+          node-version: ${{ env.node-version }}
+
+      - run: npm ci
+
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_APP_VERSION: ${{ github.run_number }}.${{ github.run_id }}
+
+      - run: rm -rf node_modules
+
+      - name: "Deploy Frontend to Azure Web App"
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.appName }}
+          slot-name: "production"
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_Frontend }}
+          package: frontend

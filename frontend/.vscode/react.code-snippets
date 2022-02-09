@@ -1,0 +1,50 @@
+{
+  "Component": {
+    "scope": "typescriptreact",
+    "prefix": "component",
+    "body": [
+      "import { FC } from \"react\";",
+      "",
+      "interface Props {}",
+      "",
+      "const ${1:MyComponent}: FC<Props> = () => {",
+      "  ${0}",
+      "  return <></>;",
+      "};",
+      "",
+      "${1:MyComponent}.displayName = \"${2:component name}\";",
+      "",
+      "export default ${1:MyComponent};",
+      ""
+    ]
+  },
+  "Page": {
+    "scope": "typescriptreact",
+    "prefix": "page",
+    "body": [
+      "import { Locale } from \"i18n/Locale\";",
+      "import { GetStaticProps, NextPage } from \"next\";",
+      "import { I18nProps } from \"next-rosetta\";",
+      "import React from \"react\";",
+      "",
+      "const ${1:Page}: NextPage = () => {",
+      "  ${0}",
+      "  return <></>;",
+      "};",
+      "",
+      "export const getStaticProps: GetStaticProps<I18nProps<Locale>> = async context => {",
+      "  const locale = context.locale || context.defaultLocale;",
+      "  const { table = {} } = await import(`../i18n/\\${locale\\}`); //!Note you might need to change the path depending on page depth",
+      "",
+      "  return {",
+      "    props: { table }",
+      "  };",
+      "};",
+      "",
+      "${1:Page}.displayName = \"${2:page name}\";",
+      "",
+      "export default ${1:Page};",
+      ""
+    ]
+  }
+}

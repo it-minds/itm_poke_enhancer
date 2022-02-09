@@ -1,0 +1,18 @@
+name: "Send PR Status to Favro"
+description: "Takes the approval and review status of a pull request and sends a webkhook with the data to Favro."
+inputs:
+  token:
+    description: "GitHub token"
+    required: true
+
+  favroUserName:
+    description: "Username of the Favro user to perform action"
+    required: true
+
+  favroToken:
+    description: "API token for the given Favro user"
+    required: true
+
+runs:
+  using: "node16"
+  main: "index.js"

@@ -1,0 +1,11 @@
+node_modules
+build
+out
+.next
+test-coverage
+.env*.local
+
+public/sw.js
+public/workbox-*.js
+
+*.local

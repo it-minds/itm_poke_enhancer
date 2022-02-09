@@ -1,0 +1,29 @@
+on:
+  pull_request:
+    types: [opened, reopened, review_requested]
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  pr-status-update:
+    name: PR Status sent to Favro
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@master
+        name: Checkout
+
+      - uses: actions/setup-node@v2.4.0
+        with:
+          node-version: 16.x
+
+      - run: npm i
+        working-directory: ./.github/actions/sendPRStatusToFavro
+
+      - name: PR Status to Favro
+        id: status
+        uses: ./.github/actions/sendPRStatusToFavro
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          favroUserName: ${{ secrets.FAVRO_USERNAME }}
+          favroToken: ${{ secrets.FAVRO_TOKEN }}

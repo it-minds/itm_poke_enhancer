@@ -1,0 +1,54 @@
+{
+  "folders": [
+    {
+      "path": "frontend",
+      "name": "Frontend Config"
+    },
+    {
+      "path": "frontend/src",
+      "name": "Frontend Source"
+    },
+    {
+      "path": "backend",
+      "name": "Backend"
+    },
+    {
+      "path": "docs",
+      "name": "Documentation"
+    },
+    {
+      "path": ".github",
+      "name": "CI/CD"
+    },
+    {
+      "path": "iac",
+      "name": "Azure"
+    }
+  ],
+  "extensions": {
+    "recommendations": [
+      "aaron-bond.better-comments",
+      "streetsidesoftware.code-spell-checker",
+      "dbaeumer.vscode-eslint",
+      "ms-vsliveshare.vsliveshare",
+      "jebbs.plantuml",
+      "ms-dotnettools.csharp",
+      "visualstudioexptteam.vscodeintellicode"
+    ],
+    "unwantedRecommendations": []
+  },
+  "settings": {
+    "editor.snippetSuggestions": "bottom",
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    },
+    "eslint.enable": true,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "plantuml.server": "https://www.plantuml.com/plantuml",
+    "files.eol": "\n",
+    "files.insertFinalNewline": true
+  }
+}

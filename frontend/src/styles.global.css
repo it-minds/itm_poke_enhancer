@@ -1,0 +1,22 @@
+html,
+body {
+  margin: 0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@media (max-width: 800px) {
+  /*  */
+}
+
+@media (max-width: 600px) {
+  /*  */
+}
+
+@media (max-width: 400px) {
+  body {
+    padding: 0;
+  }
+}
