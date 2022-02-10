@@ -22,12 +22,10 @@ namespace Application.Pokemon.Commands.CreateProperty
     public class CreatePropertyCommandHandler : IRequestHandler<CreatePropertyCommand, int>
     {
       private readonly IApplicationDbContext _context;
-      private readonly IHubContext<ExampleHub, IExampleHubService> _exampleHubContext;
 
-      public CreatePropertyCommandHandler(IApplicationDbContext context, IHubContext<ExampleHub, IExampleHubService> exampleHubContext)
+      public CreatePropertyCommandHandler(IApplicationDbContext context)
       {
         _context = context;
-        _exampleHubContext = exampleHubContext;
       }
 
       public async Task<int> Handle(CreatePropertyCommand request, CancellationToken cancellationToken)

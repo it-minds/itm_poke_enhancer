@@ -1,6 +1,7 @@
 using Application.Pokemon;
 using Application.Pokemon.Commands.CreateProperty;
 using Application.Pokemon.Queries.GetAllPokemon;
+using Application.Pokemon.Queries.GetPokemon;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading;
@@ -18,9 +19,14 @@ namespace Web.Controllers
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<ICollection<BasePokemon>>> GetPokemon([FromRoute] int id, CancellationToken cancellationToken)
+    public async Task<ActionResult<EnrichedPokemonDto>> GetEnrichedPokemon([FromRoute] int id, CancellationToken cancellationToken)
     {
-      return await Mediator.Send(new GetAllPokemonQuery(), cancellationToken);
+      GetPokemonQuery query = new GetPokemonQuery
+      {
+        Id = id
+      };
+
+      return await Mediator.Send(query, cancellationToken);
     }
 
     [HttpPost]
