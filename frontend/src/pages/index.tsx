@@ -5,16 +5,7 @@ import { I18nProps } from "next-rosetta";
 import React from "react";
 
 const IndexPage: NextPage = () => {
-
-
-
-  return (
-
-    <Link href="/pokemon">
-      View all Pokemon
-    </Link>
-
-  )
+  return <Link href="/pokemon">View all Pokemon</Link>;
 };
 
 export const getStaticProps: GetStaticProps<I18nProps<Locale>> = async context => {
