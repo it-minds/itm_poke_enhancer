@@ -1,17 +1,24 @@
 import { NextPage } from "next";
 import { useCallback, useEffect, useState } from "react";
 import { client } from "services/backend/client";
-import { BasePokemon, CreatePropertyCommand, PokeEnricherFetchClient, PokeServiceDto } from "services/backend/client.generated";
+import { BasePokemon, CreatePropertyCommand, EnrichedPokemonDto, PokeEnricherFetchClient } from "services/backend/client.generated";
 import { useRouter } from 'next/router';
 import { Button, FormControl, FormLabel, Input, InputGroup, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import React from "react";
 
-const Index: NextPage = () => {
+type Props = {
+  pokeId?: string
+}
+
+// pokemon/[id]
+const PokemonInfo: NextPage<Props> = ({ pokeId }) => {
 
   const [newDataEntryName, setNewDataEntryName] = useState("");
   const [newDataEntryValue, setNewDataEntryValue] = useState("");
-  const [pokemon, setPokemon] = useState<PokeServiceDto>(null);
-  const { asPath } = useRouter();
+  const [pokemon, setPokemon] = useState<EnrichedPokemonDto>(null);
+  const router = useRouter()
+  // const { pokeId } = pokeProps
+  // const { id } = router.query
 
   const { isOpen, onOpen, onClose } = useDisclosure()
   const initialRef = React.useRef()
@@ -19,20 +26,20 @@ const Index: NextPage = () => {
 
   const AddPokemonData = useCallback(() => {
     const newData: CreatePropertyCommand = {
-      userId: pokemon.pokeId,
-      pokeId: pokemon.pokeId,
-      name: "ting",
-      value: "ting2"
+      userId: 1,
+      pokeId: pokemon.basePokemon.id,
+      name: newDataEntryName,
+      value: newDataEntryValue
     };
 
     client(PokeEnricherFetchClient).then(c =>
       c.pokeEnricher_AddProperty(newData).catch(error => alert(error))
-    )
-  }, []);
+    );
+  }, [pokemon, newDataEntryName, newDataEntryValue]);
 
   useEffect(() => {
     client(PokeEnricherFetchClient).then(c =>
-      c.pokeEnricher_GetPokemon(1).then(basePokemon => {
+      c.pokeEnricher_GetEnrichedPokemon(parseInt(pokeId)).then(basePokemon => {
         setPokemon(basePokemon);
       })
     );
@@ -40,7 +47,7 @@ const Index: NextPage = () => {
 
   return (
     <div>
-      <p>Hello</p>
+      <p>HI</p>
       <Button onClick={onOpen}>Tilføj pokemon data</Button>
       <Modal
         initialFocusRef={initialRef}
@@ -64,7 +71,7 @@ const Index: NextPage = () => {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme='blue' mr={3} onClick={onClose}>
+            <Button colorScheme='blue' mr={3} onClick={AddPokemonData}>
               Close
             </Button>
             <Button variant='ghost'>Secondary Action</Button>
@@ -75,4 +82,9 @@ const Index: NextPage = () => {
   );
 };
 
-export default Index;
+PokemonInfo.getInitialProps = async ({ query }) => {
+  const { id } = query;
+  return { pokeId: id };
+}
+
+export default PokemonInfo;
