@@ -16,7 +16,7 @@ namespace Infrastructure.Services
       {
         HttpClient client = new HttpClient();
         var result = await client.GetAsync("http://pokeapi.co/api/v2/pokemon");
-        var resolvedPokemon = await result.Content.ReadAsAsync<Root>();
+        var resolvedPokemon = await result.Content.ReadAsAsync<AllPokemonResult>();
 
         var pokemonToReturn = new List<BasePokemon>();
         foreach (var pokemon in resolvedPokemon.results)
@@ -39,33 +39,21 @@ namespace Infrastructure.Services
 
     }
 
-    public async Task<BasePokemon> GetPokemon(int id)
+    public async Task<BasePokemon> GetBasePokemon(int id)
     {
       try
       {
-
         using (HttpClient client = new HttpClient())
         {
           var result = await client.GetAsync("http://pokeapi.co/api/v2/pokemon/" + id);
-          var resolvedPokemon = await result.Content.ReadAsAsync<Base>();
+          var fetchedPokemon = await result.Content.ReadAsAsync<PokemonResult>();
 
-          var pokemonToReturn = new List<BasePokemon>();
-          foreach (var pokemon in resolvedPokemon.results)
+          return new BasePokemon
           {
-            var pokemonUrl = pokemon.url.Split("/");
-            // Console.WriteLine(pokemon.url + ", " + pokemonUrl[pokemonUrl.Length - 2]);
-            var newPokemon = new BasePokemon
-            {
-              Name = pokemon.name,
-              Id = int.Parse(pokemonUrl[pokemonUrl.Length - 2])
-            };
-            pokemonToReturn.Add(newPokemon);
-          }
-          return pokemonToReturn;
-
+            Id = id,
+            Name = fetchedPokemon.name
+          };
         }
-
-
       }
       catch (Exception)
       {
@@ -73,17 +61,25 @@ namespace Infrastructure.Services
       }
     }
   }
-  public class Result
-  {
-    public string name { get; set; }
-    public string url { get; set; }
-  }
-  public class Root
+
+  public class AllPokemonResult
   {
     public int count { get; set; }
     public string next { get; set; }
     public object previous { get; set; }
-    public List<Result> results { get; set; }
+    public List<AllPokemonListItemResult> results { get; set; }
   }
+
+  public class AllPokemonListItemResult
+  {
+    public string name { get; set; }
+    public string url { get; set; }
+  }
+
+  public class PokemonResult
+  {
+    public string name { get; set; }
+  }
+
 }
 

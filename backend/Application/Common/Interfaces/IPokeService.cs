@@ -7,6 +7,6 @@ namespace Application.Common.Interfaces
   public interface IPokeService
   {
     Task<List<BasePokemon>> GetBasePokemonData();
-    Task<BasePokemon> GetPokemon(int id);
+    Task<BasePokemon> GetBasePokemon(int id);
   }
 }

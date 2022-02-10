@@ -608,6 +608,45 @@ export class PokeEnricherFetchClient extends ClientBase {
         }
         return Promise.resolve<number>(<any>null);
     }
+
+    pokeEnricher_GetEnrichedPokemon(id: number, signal?: AbortSignal | undefined): Promise<EnrichedPokemonDto> {
+        let url_ = this.baseUrl + "/api/PokeEnricher/{id}";
+        if (id === undefined || id === null)
+            throw new Error("The parameter 'id' must be defined.");
+        url_ = url_.replace("{id}", encodeURIComponent("" + id));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ = <RequestInit>{
+            method: "GET",
+            signal,
+            headers: {
+                "Accept": "application/json"
+            }
+        };
+
+        return this.transformOptions(options_).then(transformedOptions_ => {
+            return this.http.fetch(url_, transformedOptions_);
+        }).then((_response: Response) => {
+            return this.transformResult(url_, _response, (_response: Response) => this.processPokeEnricher_GetEnrichedPokemon(_response));
+        });
+    }
+
+    protected processPokeEnricher_GetEnrichedPokemon(response: Response): Promise<EnrichedPokemonDto> {
+        const status = response.status;
+        let _headers: any = {}; if (response.headers && response.headers.forEach) { response.headers.forEach((v: any, k: any) => _headers[k] = v); };
+        if (status === 200) {
+            return response.text().then((_responseText) => {
+            let result200: any = null;
+            result200 = _responseText === "" ? null : <EnrichedPokemonDto>JSON.parse(_responseText, this.jsonParseReviver);
+            return result200;
+            });
+        } else if (status !== 200 && status !== 204) {
+            return response.text().then((_responseText) => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            });
+        }
+        return Promise.resolve<EnrichedPokemonDto>(<any>null);
+    }
 }
 
 export interface CreateExampleChildCommand {
@@ -647,6 +686,18 @@ export interface ExampleParentDto {
 export interface BasePokemon {
     id?: number;
     name?: string | null;
+}
+
+export interface EnrichedPokemonDto {
+    basePokemon?: BasePokemon | null;
+    extraEntries?: PokeExtraEntryDto[] | null;
+}
+
+export interface PokeExtraEntryDto {
+    name?: string | null;
+    pokeId?: number;
+    userId?: number;
+    value?: string | null;
 }
 
 export interface CreatePropertyCommand {

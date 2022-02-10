@@ -1,17 +1,23 @@
+using System.Collections.Generic;
 using System.Threading;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using AutoMapper;
 using MediatR;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
+using Application.Common.Security;
 
 namespace Application.Pokemon.Queries.GetPokemon
 {
-  public class GetPokemonQuery : IRequest<PokeServiceDto>
+  [TODOAuthorize]
+  public class GetPokemonQuery : IRequest<EnrichedPokemonDto>
   {
 
-    int Id { get; set; }
+    public int Id { get; set; }
 
-    public class GetPokemonQueryHandler : IRequestHandler<GetPokemonQuery, PokeServiceDto>
+    public class GetPokemonQueryHandler : IRequestHandler<GetPokemonQuery, EnrichedPokemonDto>
     {
 
       private readonly IApplicationDbContext _context;
@@ -25,23 +31,18 @@ namespace Application.Pokemon.Queries.GetPokemon
         _pokeService = pokeService;
       }
 
-      public PokeServiceDto Handle(GetPokemonQuery request, CancellationToken cancellationToken)
+      public async Task<EnrichedPokemonDto> Handle(GetPokemonQuery request, CancellationToken cancellationToken)
       {
-        _pokeService.
+        BasePokemon basePokemon = await _pokeService.GetBasePokemon(request.Id);
+        List<PokeExtraEntryDto> extraEntries = await _context.PokeExtraEntries.Where(e => e.PokeId == request.Id)
+                                               .ProjectTo<PokeExtraEntryDto>(_mapper.ConfigurationProvider)
+                                               .ToListAsync(cancellationToken);
 
-        var ting = new PokeServiceDto
+        return new EnrichedPokemonDto
         {
-          Name = "lol",
-          PokeId = 1,
-          UserId = 1,
-          Value = "lol"
+          BasePokemon = basePokemon,
+          ExtraEntries = extraEntries
         };
-        return ting;
-      }
-
-      Task<PokeServiceDto> IRequestHandler<GetPokemonQuery, PokeServiceDto>.Handle(GetPokemonQuery request, CancellationToken cancellationToken)
-      {
-        throw new System.NotImplementedException();
       }
     }
   }
