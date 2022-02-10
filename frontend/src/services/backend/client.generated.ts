@@ -695,7 +695,6 @@ export interface EnrichedPokemonDto {
 
 export interface PokeExtraEntryDto {
     name?: string | null;
-    pokeId?: number;
     userId?: number;
     value?: string | null;
 }
