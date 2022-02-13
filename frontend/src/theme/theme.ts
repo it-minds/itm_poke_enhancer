@@ -128,7 +128,18 @@ const colors = {
   }
 };
 
-export const theme1 = extendTheme({ config, colors });
+const textStyles = {
+  h1: {
+    fontSize: ['48px', '72px'],
+    fontWeight: '300',
+    lineHeight: '110%',
+    letterSpacing: '-2%',
+    fontFamily: 'Open Sans Condensed',
+    fontStyle: 'italic',
+  }
+}
+
+export const theme1 = extendTheme({ config, colors, textStyles });
 
 export const theme2 = extendTheme({ config });
 
