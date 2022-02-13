@@ -5,6 +5,7 @@ import { BasePokemon, CreatePropertyCommand, EnrichedPokemonDto, PokeEnricherFet
 import { useRouter } from 'next/router';
 import { Button, FormControl, FormLabel, Input, InputGroup, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, useDisclosure } from "@chakra-ui/react";
 import React from "react";
+import ShowCasePokemonInfo from "components/ShowCasePokemonInfo";
 
 type Props = {
   pokeId?: string
@@ -31,11 +32,22 @@ const PokemonInfo: NextPage<Props> = ({ pokeId }) => {
       name: newDataEntryName,
       value: newDataEntryValue
     };
-
+    const tempPokemon = pokemon;
+    tempPokemon.extraEntries.push({
+      name: newDataEntryName,
+      userId: 1,
+      value: newDataEntryValue
+    });
     client(PokeEnricherFetchClient).then(c =>
-      c.pokeEnricher_AddProperty(newData).catch(error => alert(error))
+      c.pokeEnricher_AddProperty(newData)
+        .then((response) => {
+          setPokemon(tempPokemon)
+        })
+        .catch(error => alert(error))
     );
-  }, [pokemon, newDataEntryName, newDataEntryValue]);
+
+    onClose();
+  }, [pokemon, setPokemon, newDataEntryName, newDataEntryValue]);
 
   useEffect(() => {
     client(PokeEnricherFetchClient).then(c =>
@@ -47,7 +59,12 @@ const PokemonInfo: NextPage<Props> = ({ pokeId }) => {
 
   return (
     <div>
-      <p>HI</p>
+      <ShowCasePokemonInfo
+        basePokemon={pokemon?.basePokemon}
+        extraEntries={pokemon?.extraEntries}
+        pokemonId={pokemon?.basePokemon.id}>
+
+      </ShowCasePokemonInfo>
       <Button onClick={onOpen}>Tilføj pokemon data</Button>
       <Modal
         initialFocusRef={initialRef}
@@ -72,9 +89,8 @@ const PokemonInfo: NextPage<Props> = ({ pokeId }) => {
 
           <ModalFooter>
             <Button colorScheme='blue' mr={3} onClick={AddPokemonData}>
-              Close
+              Add Pokemon data
             </Button>
-            <Button variant='ghost'>Secondary Action</Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

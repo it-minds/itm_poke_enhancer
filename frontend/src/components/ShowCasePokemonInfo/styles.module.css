@@ -1,0 +1,14 @@
+
+
+.headLine {
+  border-bottom: 2px solid;
+  align-content: center;
+}
+
+.infoEntry {
+  width: 40%;
+}
+
+.flexBox {
+  padding: 0 5%;
+}
