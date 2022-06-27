@@ -42,7 +42,7 @@
     "next-rosetta": "^2.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-hook-form": "^7.25.3",
+    "react-hook-form": "^7.33.0",
     "react-list-reducer": "^1.1.0",
     "react-number-format": "^4.9.1",
     "ts-array-ext": "^2.1.0",
